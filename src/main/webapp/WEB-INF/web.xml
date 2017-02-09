@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+<filter>
+	<filter-name>SessionFilter</filter-name>
+	<filter-class>
+		         devops.SessionFilter
+	</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>SessionFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+    <servlet>
+        <servlet-name>add</servlet-name>
+        <servlet-class>devops.AddCustomer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>update_delete</servlet-name>
+        <servlet-class>devops.update_delete</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>update</servlet-name>
+        <servlet-class>devops.UpdateCustomer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>delete</servlet-name>
+        <servlet-class>devops.DeleteCustomer</servlet-class>
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>LoginServlet</display-name>
+    	<servlet-name>LoginServlet</servlet-name>
+    	<servlet-class>devops.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>RegisterServlet</display-name>
+    	<servlet-name>RegisterServlet</servlet-name>
+    	<servlet-class>devops.RegisterServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HibernateUtil</servlet-name>
+        <servlet-class>devops.HibernateUtil</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>test</display-name>
+    	<servlet-name>test</servlet-name>
+    	<servlet-class>devops.test</servlet-class>
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>GetData</display-name>
+    	<servlet-name>GetData</servlet-name>
+    	<servlet-class>devops.GetData</servlet-class>
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>Logout</display-name>
+    	<servlet-name>Logout</servlet-name>
+    	<servlet-class>devops.Logout</servlet-class>
+    </servlet>
+ 
+    
+    <servlet-mapping>
+        <servlet-name>add</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>update_delete</servlet-name>
+        <url-pattern>/update_delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>update</servlet-name>
+        <url-pattern>/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>delete</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>LoginServlet</servlet-name>
+    	<url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>RegisterServlet</servlet-name>
+    	<url-pattern>/RegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>test</servlet-name>
+    	<url-pattern>/test</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>GetData</servlet-name>
+    	<url-pattern>/GetData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>Logout</servlet-name>
+    	<url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+  
+    <session-config>
+        <session-timeout>
+            10
+        </session-timeout>
+    </session-config>
+</web-app>

@@ -1,0 +1,7 @@
+language: java
+artifact: war
+pipeline:
+  group: Java
+jenkins:
+  label: 'master'
+  emailNotification: APraveenKumar@hexaware.com MohammedkhajaP@hexaware.com VishnuV@hexaware.com

@@ -1,0 +1,32 @@
+
+<html>
+<head>
+<style>
+a:link,a:visited {
+	color: white;
+	padding: 10px 20px;
+	background-color: grey;
+	text-decoration: none;
+	border: 0;
+	display: inline-block;
+	width: 210px;
+	font-size: 1em !important;
+	font-family: Arial !important;
+	font-weight: bold !important;
+}
+a:hover,a:active {
+	background-color: grey;
+}
+</style>
+</head>
+<body>
+	<h1
+		style="text-align: center; font-family: Sans-serif; font-size: 30px;">DEVOPS
+		PORTAL</h1>
+	<a href="view/add_new.jsp"> Add New Employee Profile </a>
+	<br />
+	<br />
+	<a href="view/display.jsp"> View Employee Database </a>
+	<jsp:forward page="/view/display.jsp" />
+</body>
+</html>
