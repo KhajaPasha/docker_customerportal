@@ -11,5 +11,6 @@ ENV APP_HOME "$PWD/customercrud"
 
 RUN mkdir -p $APP_HOME
 COPY ./* $APP_HOME/
+RUN cd $APP_HOME/
 RUN mvn clean install
 RUN cp $PWD/target/CustomerPortal.war /usr/local/tomcat/webapps/
