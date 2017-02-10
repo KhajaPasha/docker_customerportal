@@ -16,6 +16,4 @@ RUN mkdir -p $APP_HOME
 RUN cd $APP_HOME
 COPY ./* ./
 RUN mvn clean install
-COPY /target/CustomerPortal.war /usr/local/tomcat/webapps/
-
-#ENTRYPOINT ["curl","http://localhost:8080"]
+RUN cp $PWD/target/CustomerPortal.war /usr/local/tomcat/webapps/
