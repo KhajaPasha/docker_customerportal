@@ -1,57 +1,22 @@
-FROM ubuntu:14.04
+FROM openjdk:8-jdk-alpine
 
-ENV TOMCAT_VERSION 6.0.48
+RUN apk add --no-cache curl tar bash
 
-# Set locales
-RUN locale-gen en_GB.UTF-8
-ENV LANG en_GB.UTF-8
-ENV LC_CTYPE en_GB.UTF-8
+ARG MAVEN_VERSION=3.3.9
+ARG USER_HOME_DIR="/root"
 
-# Fix sh
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
+  && curl -fsSL http://apache.osuosl.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz \
+    | tar -xzC /usr/share/maven --strip-components=1 \
+  && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-RUN apt-get update && \
-apt-get install -y git build-essential curl wget software-properties-common
+ENV MAVEN_HOME /usr/share/maven
+ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
-# Install JDK 8
-RUN \
-echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-add-apt-repository -y ppa:webupd8team/java && \
-apt-get update >> /dev/null && \
-apt-get install -y oracle-java8-installer wget unzip tar maven >> /dev/null && \
-rm -rf /var/lib/apt/lists/*  && \
-rm -rf /var/cache/oracle-jdk8-installer
+COPY mvn-entrypoint.sh /usr/local/bin/mvn-entrypoint.sh
+COPY settings-docker.xml /usr/share/maven/ref/
 
-# Define commonly used JAVA_HOME variable
-ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+VOLUME "$USER_HOME_DIR/.m2"
 
-# Get Tomcat
-RUN wget --no-cookies http://redrockdigimark.com/apachemirror/tomcat/tomcat-6/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz -O /tmp/tomcat.tgz && \
-tar xzvf /tmp/tomcat.tgz -C /opt && \
-mv /opt/apache-tomcat-${TOMCAT_VERSION} /opt/tomcat && \
-rm /tmp/tomcat.tgz && \
-rm -rf /opt/tomcat/webapps/examples && \
-rm -rf /opt/tomcat/webapps/docs && \
-rm -rf /opt/tomcat/webapps/ROOT
-
-# Add admin/admin user
-ADD tomcat-users.xml /opt/tomcat/conf/
-
-ENV CATALINA_HOME /opt/tomcat
-ENV PATH $PATH:$CATALINA_HOME/bin
-
-EXPOSE 8080
-EXPOSE 8009
-#VOLUME "/opt/tomcat/webapps"
-#WORKDIR /opt/tomcat
-
-RUN mkdir -p ./customercrud
-COPY ./lib ./customercrud/lib
-COPY ./src ./customercrud/src
-COPY ./pom.xml ./customercrud/pom.xml
-WORKDIR ./customercrud/
-RUN mvn clean install
-RUN cp -v target/CustomerPortal.war /opt/tomcat/webapps/
-
-# Launch Tomcat
-CMD ["/opt/tomcat/bin/catalina.sh", "run"]
+ENTRYPOINT ["/usr/local/bin/mvn-entrypoint.sh"]
+CMD ["mvn"]
