@@ -51,9 +51,7 @@ COPY ./src ./customercrud/src
 COPY ./pom.xml ./customercrud/pom.xml
 WORKDIR ./customercrud/
 RUN mvn clean install
-RUN ls target/
 RUN cp -v target/CustomerPortal.war /opt/tomcat/webapps/
-RUN ls /opt/tomcat/webapps/
 
 # Launch Tomcat
 CMD ["/opt/tomcat/bin/catalina.sh", "run"]
